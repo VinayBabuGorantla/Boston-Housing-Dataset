@@ -19,13 +19,15 @@ class PredictPipeline:
             model = load_object(self.model_path)
             preprocessor = load_object(self.preprocessor_path)
 
-            logging.info("Model and preprocessor loaded.")
+            logging.info("Model and preprocessor loaded successfully.")
 
             # Preprocess input features
             transformed_data = preprocessor.transform(features)
+            logging.info(f"Input features transformed. Shape: {transformed_data.shape}")
 
             # Predict
             preds = model.predict(transformed_data)
+            logging.info("Prediction completed.")
 
             return preds
 
@@ -60,6 +62,8 @@ class CustomData:
     def get_data_as_dataframe(self) -> pd.DataFrame:
         try:
             df = pd.DataFrame([self.feature_dict])
+            df.columns = df.columns.str.lower()  # Normalize column names
+            logging.info("Custom data converted to DataFrame successfully.")
             return df
         except Exception as e:
             raise CustomException(e, sys)

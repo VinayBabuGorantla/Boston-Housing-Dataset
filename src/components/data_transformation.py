@@ -56,6 +56,10 @@ class DataTransformation:
             test_df = pd.read_csv(test_path)
             logging.info("Train and Test CSVs loaded successfully.")
 
+            # 🆕 Standardize column names
+            train_df.columns = train_df.columns.str.strip().str.lower()
+            test_df.columns = test_df.columns.str.strip().str.lower()
+
             target_column = "medv"  # Target variable in Boston dataset
 
             input_features = train_df.columns.drop(target_column).tolist()

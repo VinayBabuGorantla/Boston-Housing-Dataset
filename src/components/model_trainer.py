@@ -1,5 +1,3 @@
-# src/components/model_trainer.py
-
 import os
 import sys
 from dataclasses import dataclass
@@ -66,23 +64,23 @@ class ModelTrainer:
             if best_score < 0.7:
                 raise CustomException(f"No suitable model found. Best R²: {best_score}", sys)
 
-            # MLflow experiment logging
-            mlflow.set_experiment("Boston_Housing_Regression")
+            # Train the best model (if not already trained in evaluate_models)
+            best_model.fit(X_train, y_train)
+            y_pred = best_model.predict(X_test)
+            final_r2 = r2_score(y_test, y_pred)
 
+            # MLflow logging
+            mlflow.set_experiment("Boston_Housing_Regression")
             with mlflow.start_run():
                 mlflow.log_param("model_name", best_model_name)
                 for param_name, param_value in params[best_model_name].items():
                     mlflow.log_param(param_name, param_value)
 
-                best_model.fit(X_train, y_train)
-                y_pred = best_model.predict(X_test)
-                final_r2 = r2_score(y_test, y_pred)
-
                 mlflow.log_metric("r2_score", final_r2)
                 mlflow.sklearn.log_model(best_model, "model")
-
                 logging.info(f"MLflow logging complete. Final R²: {final_r2:.4f}")
 
+            # Save model
             save_object(self.config.trained_model_path, best_model)
             logging.info(f"Trained model saved at: {self.config.trained_model_path}")
 

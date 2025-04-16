@@ -21,7 +21,7 @@ if __name__ == "__main__":
         trainer = ModelTrainer()
         r2_score = trainer.initiate_model_trainer(train_arr, test_arr)
 
-        logging.info(f"Training pipeline completed successfully with R² score: {r2_score:.4f}")
+        logging.info(f"✅ Training pipeline completed successfully with R² score: {r2_score:.4f}")
 
     except Exception as e:
         raise CustomException(e, sys)

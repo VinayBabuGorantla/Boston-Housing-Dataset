@@ -22,8 +22,12 @@ class DataIngestion:
         logging.info("Entered the data ingestion component.")
         try:
             # Load the Boston housing dataset from CSV
-            df = pd.read_csv(self.ingestion_config.source_data_path)  # ✅ Replaced load_boston() with CSV read
+            df = pd.read_csv(self.ingestion_config.source_data_path)
             logging.info("Boston Housing dataset loaded from CSV into DataFrame.")
+
+            # 🆕 Clean column names: strip spaces and convert to lowercase
+            df.columns = df.columns.str.strip().str.lower()
+            logging.info("Column names standardized: %s", df.columns.tolist())
 
             # Create artifacts directory if it doesn't exist
             os.makedirs(os.path.dirname(self.ingestion_config.raw_data_path), exist_ok=True)
