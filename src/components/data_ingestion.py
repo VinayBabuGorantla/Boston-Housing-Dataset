@@ -25,7 +25,7 @@ class DataIngestion:
             df = pd.read_csv(self.ingestion_config.source_data_path)
             logging.info("Boston Housing dataset loaded from CSV into DataFrame.")
 
-            # 🆕 Clean column names: strip spaces and convert to lowercase
+            # Clean column names: strip spaces and convert to lowercase
             df.columns = df.columns.str.strip().str.lower()
             logging.info("Column names standardized: %s", df.columns.tolist())
 

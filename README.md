@@ -1,32 +1,22 @@
-# 🏠 Boston Housing Price Prediction - MLOps Project 📉📦
+# 🏠 Boston Housing Price Prediction - MLOps Project
 
-## 💡 Overview
+## 📊 Overview
 
-This is an end-to-end **Machine Learning Regression project** that predicts housing prices in Boston based on various features such as crime rate, average number of rooms, and distance to employment centers using the **Boston Housing dataset**.
+This is an end-to-end **Machine Learning Regression project** that predicts housing prices in Boston based on features such as crime rate, number of rooms, etc., using the **Boston Housing dataset**.
 
-The project is designed for **production-readiness** and follows an industry-level **MLOps workflow**, featuring:
+This project is built for production readiness and follows a complete **MLOps workflow**, including:
 
-- 📥 **Data Ingestion**  
-- 🧹 **Preprocessing & Transformation**  
-- 🤖 **Model Training with GridSearchCV**  
-- 📊 **Model Evaluation & Persistence**  
-- 🌐 **Flask Web Application for Predictions**  
-- 🪵 **Logging and Exception Handling**  
-- 🐳 **Container-ready (Dockerization Supported)**
+- ✅ Data Ingestion
+- ✅ Data Transformation
+- ✅ Model Training with GridSearchCV
+- ✅ Model Evaluation and Persistence
+- ✅ Flask Web Application
+- ✅ Logging and Exception Handling
+- ✅ DVC for data and model versioning
+- ✅ MLflow for experiment tracking
+- ✅ Docker for containerization and deployment
 
----
-
-## 🔧 Technologies Used
-
-- Python 🐍  
-- Pandas, NumPy  
-- Scikit-learn  
-- MLflow (for experiment tracking)  
-- DVC (for dataset and model versioning)  
-- Flask (for web interface)  
-- Docker (for containerization)
-
----
-
-## 📁 Project Structure
+# Docker Build and Run Commands
+docker build -t project-name .
+docker run -p 8080:8080 project-name
 

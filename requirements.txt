@@ -11,4 +11,5 @@ joblib
 dill
 dvc
 mlflow
+pytest
 -e .
