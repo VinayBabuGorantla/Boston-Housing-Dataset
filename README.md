@@ -15,8 +15,3 @@ This project is built for production readiness and follows a complete **MLOps wo
 - ✅ DVC for data and model versioning
 - ✅ MLflow for experiment tracking
 - ✅ Docker for containerization and deployment
-
-# Docker Build and Run Commands
-docker build -t project-name .
-docker run -p 8080:8080 project-name
-
