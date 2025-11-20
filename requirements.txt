@@ -11,5 +11,5 @@ joblib
 dill
 dvc
 mlflow
-pytest
 -e .
+flake8

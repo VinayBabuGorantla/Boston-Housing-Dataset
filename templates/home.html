@@ -1,41 +1,128 @@
-<!-- templates/home.html -->
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Predict Boston House Price</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predict Price - Boston Housing</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body { background-color: #f8f9fa; }
-        .form-section { background: #fff; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
-<div class="container mt-5">
-    <div class="form-section">
-        <h2 class="mb-4 text-center">Enter Feature Values</h2>
-        <form action="/predictdata" method="post">
-            <div class="row">
-                {% for feature in ["crim", "zn", "indus", "chas", "nox", "rm", "age", 
-                                   "dis", "rad", "tax", "ptratio", "b", "lstat"] %}
-                <div class="col-md-4 mb-3">
-                    <label class="form-label">{{ feature.upper() }}</label>
-                    <input type="number" step="any" class="form-control" name="{{ feature }}" required>
-                </div>
-                {% endfor %}
-            </div>
-            <div class="text-center mt-4">
-                <button type="submit" class="btn btn-primary btn-lg">Predict Price</button>
-            </div>
-        </form>
 
-        {% if results %}
-        <div class="alert alert-info mt-4 text-center">
-            <h4 class="mb-0">Predicted House Price: <strong>${{ results | round(2) }}</strong></h4>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/"><i class="fas fa-home me-2"></i>Boston Housing AI</a>
         </div>
-        {% endif %}
+    </nav>
+
+    <div class="container mb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card card-custom p-4 p-md-5">
+                    <h2 class="text-center mb-4 fw-bold text-primary">Property Details</h2>
+
+                    <form action="/predictdata" method="post">
+                        <div class="row g-3">
+                            <!-- Crime & Zone -->
+                            <div class="col-md-6">
+                                <label class="feature-label">CRIM (Crime Rate)</label>
+                                <input type="number" step="any" class="form-control" name="crim"
+                                    placeholder="e.g. 0.00632" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="feature-label">ZN (Residential Land Zone)</label>
+                                <input type="number" step="any" class="form-control" name="zn" placeholder="e.g. 18.0"
+                                    required>
+                            </div>
+
+                            <!-- Industry & River -->
+                            <div class="col-md-6">
+                                <label class="feature-label">INDUS (Non-retail Business)</label>
+                                <input type="number" step="any" class="form-control" name="indus"
+                                    placeholder="e.g. 2.31" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="feature-label">CHAS (Charles River Dummy)</label>
+                                <select class="form-select form-control" name="chas" required>
+                                    <option value="0">No (0)</option>
+                                    <option value="1">Yes (1)</option>
+                                </select>
+                            </div>
+
+                            <!-- NOX & Rooms -->
+                            <div class="col-md-6">
+                                <label class="feature-label">NOX (Nitric Oxides)</label>
+                                <input type="number" step="any" class="form-control" name="nox" placeholder="e.g. 0.538"
+                                    required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="feature-label">RM (Avg Rooms)</label>
+                                <input type="number" step="any" class="form-control" name="rm" placeholder="e.g. 6.575"
+                                    required>
+                            </div>
+
+                            <!-- Age & Distance -->
+                            <div class="col-md-6">
+                                <label class="feature-label">AGE (Old Units %)</label>
+                                <input type="number" step="any" class="form-control" name="age" placeholder="e.g. 65.2"
+                                    required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="feature-label">DIS (Distance to Employment)</label>
+                                <input type="number" step="any" class="form-control" name="dis" placeholder="e.g. 4.09"
+                                    required>
+                            </div>
+
+                            <!-- Highways & Tax -->
+                            <div class="col-md-6">
+                                <label class="feature-label">RAD (Highway Access Index)</label>
+                                <input type="number" step="any" class="form-control" name="rad" placeholder="e.g. 1.0"
+                                    required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="feature-label">TAX (Property Tax Rate)</label>
+                                <input type="number" step="any" class="form-control" name="tax" placeholder="e.g. 296.0"
+                                    required>
+                            </div>
+
+                            <!-- PTRATIO, B, LSTAT -->
+                            <div class="col-md-4">
+                                <label class="feature-label">PTRATIO (Pupil-Teacher Ratio)</label>
+                                <input type="number" step="any" class="form-control" name="ptratio"
+                                    placeholder="e.g. 15.3" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="feature-label">B (Black Population Prop.)</label>
+                                <input type="number" step="any" class="form-control" name="b" placeholder="e.g. 396.9"
+                                    required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="feature-label">LSTAT (Lower Status %)</label>
+                                <input type="number" step="any" class="form-control" name="lstat"
+                                    placeholder="e.g. 4.98" required>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-5">
+                            <button type="submit" class="btn btn-primary btn-lg w-50">
+                                <i class="fas fa-calculator me-2"></i>Predict Price
+                            </button>
+                        </div>
+                    </form>
+
+                    {% if results %}
+                    <div class="result-card text-center">
+                        <h3 class="mb-2">Estimated Property Value</h3>
+                        <h1 class="display-3 fw-bold mb-0">${{ results | round(2) }}k</h1>
+                        <p class="mt-2 mb-0 opacity-75">Based on current market data</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 </body>
+
 </html>

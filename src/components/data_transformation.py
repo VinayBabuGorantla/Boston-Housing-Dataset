@@ -90,3 +90,13 @@ class DataTransformation:
 
         except Exception as e:
             raise CustomException(e, sys)
+
+if __name__ == "__main__":
+    obj = DataTransformation()
+    train_arr, test_arr, _ = obj.initiate_data_transformation(
+        train_path=os.path.join('artifacts', 'train.csv'),
+        test_path=os.path.join('artifacts', 'test.csv')
+    )
+    # Save transformed arrays for the next stage
+    np.save(os.path.join('artifacts', 'transformed_train.npy'), train_arr)
+    np.save(os.path.join('artifacts', 'transformed_test.npy'), test_arr)

@@ -1,0 +1,70 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/components/data_ingestion.py
+    deps:
+    - path: notebook/data/boston.csv
+      hash: md5
+      md5: 9d9460d994e88c868ee98ea23e6c4111
+      size: 35008
+    - path: src/components/data_ingestion.py
+      hash: md5
+      md5: f35e8efd66c0b368d20e91c7248aead5
+      size: 2301
+    outs:
+    - path: artifacts/test.csv
+      hash: md5
+      md5: 432c5d10676023ee58f1526c90033d7d
+      size: 9402
+    - path: artifacts/train.csv
+      hash: md5
+      md5: 8507f2a232aedfe6f190c46ce7d3846b
+      size: 27796
+  data_transformation:
+    cmd: python src/components/data_transformation.py
+    deps:
+    - path: artifacts/test.csv
+      hash: md5
+      md5: 432c5d10676023ee58f1526c90033d7d
+      size: 9402
+    - path: artifacts/train.csv
+      hash: md5
+      md5: 8507f2a232aedfe6f190c46ce7d3846b
+      size: 27796
+    - path: src/components/data_transformation.py
+      hash: md5
+      md5: e418764e3e85a526a7bdef136f28e57e
+      size: 3840
+    outs:
+    - path: artifacts/preprocessor.pkl
+      hash: md5
+      md5: 237544650ca8015dce6e9d4152a7a152
+      size: 2186
+    - path: artifacts/transformed_test.npy
+      hash: md5
+      md5: 2b3b5ea5165a61d3b1f68e40721ca2b9
+      size: 14352
+    - path: artifacts/transformed_train.npy
+      hash: md5
+      md5: c778fbd6700f6e39690a285ae62867bc
+      size: 42576
+  model_trainer:
+    cmd: python src/components/model_trainer.py
+    deps:
+    - path: artifacts/transformed_test.npy
+      hash: md5
+      md5: 2b3b5ea5165a61d3b1f68e40721ca2b9
+      size: 14352
+    - path: artifacts/transformed_train.npy
+      hash: md5
+      md5: c778fbd6700f6e39690a285ae62867bc
+      size: 42576
+    - path: src/components/model_trainer.py
+      hash: md5
+      md5: ea7d53f35d5af79de9d8e690dbeec4b0
+      size: 3682
+    outs:
+    - path: artifacts/model.pkl
+      hash: md5
+      md5: c4883bd95387389e00f56a779fe98a97
+      size: 3312905

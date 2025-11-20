@@ -88,3 +88,12 @@ class ModelTrainer:
 
         except Exception as e:
             raise CustomException(e, sys)
+
+if __name__ == "__main__":
+    import numpy as np
+    # Load transformed data
+    train_arr = np.load(os.path.join('artifacts', 'transformed_train.npy'))
+    test_arr = np.load(os.path.join('artifacts', 'transformed_test.npy'))
+
+    obj = ModelTrainer()
+    obj.initiate_model_trainer(train_arr, test_arr)
